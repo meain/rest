@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -23,26 +24,30 @@ type requestObject struct {
 	method requestMethod
 }
 
-func parseInput(input string) requestObject {
+func parseInput(input string) (requestObject, error) {
 	lines := strings.Split(input, "\n")
-	var filteredLines []string
+	parseStarted := false
+	var parsedMethod requestMethod
+	var parsedURL string
 	for _, line := range lines {
-		if len(line) != 0 {
-			filteredLines = append(filteredLines, line)
+		tokens := strings.Split(line, " ")
+		if !parseStarted {
+			if len(line) == 0 {
+				continue
+			} else if tokens[0] == "GET" {
+				parsedMethod = GET
+				parsedURL = tokens[1]
+			} else if tokens[0] == "POST" {
+				parsedMethod = POST
+				parsedURL = tokens[1]
+			}
 		}
 	}
-	fmt.Println("filteredLines:", filteredLines)
-	firstLine := filteredLines[0] // TODO: do bounds check
-	tokens := strings.Split(firstLine, " ")
-	var rM requestMethod = GET
-	if tokens[0] == "GET" {
-		rM = GET
-	} else if tokens[0] == "POST" {
-		rM = POST
+	if parsedURL != "" {
+		return requestObject{url: parsedURL, method: parsedMethod}, nil
 	} else {
-		panic("Dude, what the hell is going on?")
+		return requestObject{}, errors.New("Unable to parse the thing")
 	}
-	return requestObject{url: tokens[1], method: rM}
 }
 
 func makeRequest(rO requestObject) {
@@ -71,6 +76,10 @@ func main() {
 		}
 	}
 	fmt.Println("input:", input)
-	rm := parseInput(input)
+	rm, err := parseInput(input)
+	if err != nil {
+		fmt.Println("Unable to parse input")
+		return
+	}
 	makeRequest(rm)
 }
