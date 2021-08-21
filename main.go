@@ -45,16 +45,10 @@ func parseInput(input string) (requestObject, error) {
 	parsedHeaders := make(map[string]string)
 	var parsedData string
 	for _, line := range lines {
-		if len(line) == 0 {
-			if currentParseState == Headers {
-				currentParseState = Data
-			} else {
+		if currentParseState == Url {
+			if len(line) == 0 || strings.HasPrefix(strings.Trim(line, " "), "#") {
 				continue
 			}
-		} else if strings.HasPrefix(strings.Trim(line, " "), "#") {
-			// This is a comment
-			continue
-		} else if currentParseState == Url {
 			tokens := strings.Split(line, " ")
 			if isIn(tokens[0], []string{"GET", "POST", "DELETE", "HEAD", "PUT", "PATCH"}) {
 				parsedMethod = tokens[0]
@@ -64,6 +58,10 @@ func parseInput(input string) (requestObject, error) {
 			currentParseState = Headers
 			parsedURL = tokens[1]
 		} else if currentParseState == Headers {
+			if len(line) == 0 {
+				currentParseState = Data
+				continue
+			}
 			tokens := strings.Split(line, ":")
 			if len(tokens) == 2 {
 				parsedHeaders[strings.Trim(tokens[0], " ")] = strings.Trim(tokens[1], " ")

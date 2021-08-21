@@ -106,6 +106,10 @@ func TestInputParseWithData(t *testing.T) {
 		want  requestObject
 	}{
 		{"GET https://meain.io\n\nHello World!", requestObject{url: "https://meain.io", method: "GET", data: "Hello World!"}},
+		{"GET https://meain.io\nHas-Headers: true\n\nHello World!", requestObject{url: "https://meain.io", method: "GET", data: "Hello World!"}},
+		{"GET https://meain.io\n\nLooks-Like-Headers-But-Data: true\n\nHello World!", requestObject{url: "https://meain.io", method: "GET", data: "Looks-Like-Headers-But-Data: true\n\nHello World!"}},
+		{"GET https://meain.io\n\nHello\n\nWorld!", requestObject{url: "https://meain.io", method: "GET", data: "Hello\n\nWorld!"}},
+		{"GET https://meain.io\n\nHello\n#A thing that looks like a comment\nWorld!", requestObject{url: "https://meain.io", method: "GET", data: "Hello\n#A thing that looks like a comment\nWorld!"}},
 		{"GET https://meain.io\n\n{\n\"key\":\"value\"\n}", requestObject{url: "https://meain.io", method: "GET", data: "{\n\"key\":\"value\"\n}"}},
 	}
 	for i, tc := range tests {
