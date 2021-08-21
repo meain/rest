@@ -4,6 +4,14 @@
 
 ## Usage
 
+You can pass the thing to run via stdin or pass a filename as the first argument.
+
+``` shell
+echo 'GET https://meain.io' | rest
+```
+
+## Options
+
 ### HEAD
 
 You can specify an http get endpoint
