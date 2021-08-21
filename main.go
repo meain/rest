@@ -68,7 +68,7 @@ func parseInput(input string) (requestObject, error) {
 			if len(tokens) == 2 {
 				parsedHeaders[strings.Trim(tokens[0], " ")] = strings.Trim(tokens[1], " ")
 			} else {
-				fmt.Println("Unable to parse: ", line)
+				fmt.Println("Unable to parse:", line)
 			}
 		} else if currentParseState == Data {
 			parsedData += line + "\n"
@@ -91,10 +91,10 @@ func parseInput(input string) (requestObject, error) {
 	}
 }
 
-func makeRequest(rO requestObject) {
+func makeRequest(rO requestObject) error {
 	req, err := http.NewRequest(rO.method, rO.url, strings.NewReader(rO.data))
 	if err != nil {
-		fmt.Println("Unable to create request")
+		return errors.New("Unable to create request")
 	}
 	for header, value := range rO.headers {
 		req.Header.Add(header, value)
@@ -102,7 +102,7 @@ func makeRequest(rO requestObject) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Unable to process request")
+		return errors.New("Unable to process request")
 	}
 	fmt.Println(resp.Status)
 	for header, value := range resp.Header {
@@ -111,7 +111,7 @@ func makeRequest(rO requestObject) {
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Unable to read resopnse body")
+		return errors.New("Unable to read resopnse body")
 	}
 	contentType, ok := resp.Header["Content-Type"]
 	if ok && strings.Split(contentType[0], ";")[0] == "application/json" {
@@ -125,6 +125,7 @@ func makeRequest(rO requestObject) {
 	} else {
 		fmt.Println("\n", string(body))
 	}
+	return nil
 }
 
 func main() {
@@ -135,6 +136,7 @@ func main() {
 		content, err := ioutil.ReadFile(fileName)
 		if err != nil {
 			fmt.Println("Unable to read file")
+			return
 		}
 		input = string(content)
 	} else {
@@ -148,5 +150,8 @@ func main() {
 		fmt.Println("Unable to parse input")
 		return
 	}
-	makeRequest(rm)
+	err = makeRequest(rm)
+	if err != nil {
+		fmt.Println("Unable to make request:", err)
+	}
 }
