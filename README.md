@@ -10,6 +10,10 @@ You can pass the thing to run via stdin or pass a filename as the first argument
 echo 'GET https://meain.io' | rest
 ```
 
+``` shell
+rest file-with-content.http
+```
+
 ## Options
 
 ### HEAD

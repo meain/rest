@@ -131,12 +131,17 @@ func main() {
 	if len(os.Args) > 1 {
 		// We have a filename passed in
 		fileName := os.Args[1]
-		content, err := ioutil.ReadFile(fileName)
-		if err != nil {
-			fmt.Println("Unable to read file")
+		if fileName == "--help" {
+			fmt.Println("Usage: rest <filename>")
 			return
+		} else {
+			content, err := ioutil.ReadFile(fileName)
+			if err != nil {
+				fmt.Println("Unable to read file")
+				return
+			}
+			input = string(content)
 		}
-		input = string(content)
 	} else {
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
