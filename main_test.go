@@ -32,9 +32,9 @@ func TestInputParseBasic(t *testing.T) {
 		input string
 		want  requestObject
 	}{
-		{"GET https://meain.io", requestObject{url: "https://meain.io", method: GET}},
-		{"POST https://meain.io", requestObject{url: "https://meain.io", method: POST}},
-		{"POST meain.io", requestObject{url: "meain.io", method: POST}},
+		{"GET https://meain.io", requestObject{url: "https://meain.io", method: "GET"}},
+		{"POST https://meain.io", requestObject{url: "https://meain.io", method: "POST"}},
+		{"POST meain.io", requestObject{url: "meain.io", method: "POST"}},
 	}
 	for i, tc := range tests {
 		t.Run(fmt.Sprintf("InputParse=%d", i), func(t *testing.T) {
@@ -57,8 +57,8 @@ func TestInputParseWithComments(t *testing.T) {
 		input string
 		want  requestObject
 	}{
-		{"# Sample comment\nGET https://meain.io", requestObject{url: "https://meain.io", method: GET}},
-		{"# Sample comment\n#More comments\nGET https://meain.io", requestObject{url: "https://meain.io", method: GET}},
+		{"# Sample comment\nGET https://meain.io", requestObject{url: "https://meain.io", method: "GET"}},
+		{"# Sample comment\n#More comments\nGET https://meain.io", requestObject{url: "https://meain.io", method: "GET"}},
 	}
 	for i, tc := range tests {
 		t.Run(fmt.Sprintf("InputParse=%d", i), func(t *testing.T) {
@@ -81,8 +81,8 @@ func TestInputParseWithHeaders(t *testing.T) {
 		input string
 		want  requestObject
 	}{
-		{"GET https://meain.io\nContent-Type: application/json", requestObject{url: "https://meain.io", method: GET, headers: map[string]string{"Content-Type": "application/json"}}},
-		{"GET https://meain.io\nContent-Type: application/json\nKeep-Alive:300", requestObject{url: "https://meain.io", method: GET, headers: map[string]string{"Content-Type": "application/json", "Keep-Alive": "300"}}},
+		{"GET https://meain.io\nContent-Type: application/json", requestObject{url: "https://meain.io", method: "GET", headers: map[string]string{"Content-Type": "application/json"}}},
+		{"GET https://meain.io\nContent-Type: application/json\nKeep-Alive:300", requestObject{url: "https://meain.io", method: "GET", headers: map[string]string{"Content-Type": "application/json", "Keep-Alive": "300"}}},
 	}
 	for i, tc := range tests {
 		t.Run(fmt.Sprintf("InputParse=%d", i), func(t *testing.T) {
@@ -105,8 +105,8 @@ func TestInputParseWithData(t *testing.T) {
 		input string
 		want  requestObject
 	}{
-		{"GET https://meain.io\n\nHello World!", requestObject{url: "https://meain.io", method: GET, data: "Hello World!"}},
-		{"GET https://meain.io\n\n{\n\"key\":\"value\"\n}", requestObject{url: "https://meain.io", method: GET, data: "{\n\"key\":\"value\"\n}"}},
+		{"GET https://meain.io\n\nHello World!", requestObject{url: "https://meain.io", method: "GET", data: "Hello World!"}},
+		{"GET https://meain.io\n\n{\n\"key\":\"value\"\n}", requestObject{url: "https://meain.io", method: "GET", data: "{\n\"key\":\"value\"\n}"}},
 	}
 	for i, tc := range tests {
 		t.Run(fmt.Sprintf("InputParse=%d", i), func(t *testing.T) {
