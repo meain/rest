@@ -77,3 +77,8 @@ Content-Type: application/json
   "key": "value"
 }
 ```
+
+
+## Alternatives
+
+- [restcli/restcli](https://github.com/restcli/restcli)
