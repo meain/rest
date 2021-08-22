@@ -16,15 +16,7 @@ rest file-with-content.http
 
 ## Options
 
-### HEAD
-
-You can specify an http get endpoint
-
-``` rest
-HEAD https://postman-echo.com/head
-```
-
-### GET
+#### GET
 
 You can specify an http get endpoint
 
@@ -32,7 +24,9 @@ You can specify an http get endpoint
 GET https://postman-echo.com/get
 ```
 
-### GET with comments
+*You can do any other http operation the same way*
+
+#### GET with comments
 
 You can specify an http get endpoint
 
@@ -41,7 +35,7 @@ You can specify an http get endpoint
 GET https://postman-echo.com/get
 ```
 
-### GET with params
+#### GET with params
 
 You can specify an http get endpoint
 
@@ -49,7 +43,7 @@ You can specify an http get endpoint
 GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
 ```
 
-### GET with headers
+#### GET with headers
 
 You can specify an http get endpoint
 
@@ -58,7 +52,7 @@ GET https://postman-echo.com/get
 Sample-Header: Hello-World
 ```
 
-### POST with data
+#### POST with data
 
 You can specify an http get endpoint
 
