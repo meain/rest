@@ -2,6 +2,19 @@
 
 > CLI version of https://github.com/pashky/restclient.el
 
+
+## Install
+
+### macOS
+
+```
+brew install meain/homebrew-meain/gloc
+```
+
+### Manual
+
+Download the binary from the [release page](https://github.com/meain/rest/releases).
+
 ## Usage
 
 You can pass the thing to run via stdin or pass a filename as the first argument.
