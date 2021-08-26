@@ -2,12 +2,11 @@
 
 > CLI version of https://github.com/pashky/restclient.el
 
-
 ## Install
 
 ### macOS
 
-```
+```shell
 brew install meain/homebrew-meain/gloc
 ```
 
@@ -19,11 +18,11 @@ Download the binary from the [release page](https://github.com/meain/rest/releas
 
 You can pass the thing to run via stdin or pass a filename as the first argument.
 
-``` shell
+```shell
 echo 'GET https://meain.io' | rest
 ```
 
-``` shell
+```shell
 rest file-with-content.http
 ```
 
@@ -33,17 +32,17 @@ rest file-with-content.http
 
 You can specify an http get endpoint
 
-``` rest
+```rest
 GET https://postman-echo.com/get
 ```
 
-*You can do any other http operation the same way*
+_You can do any other http operation the same way_
 
 #### GET with comments
 
 You can specify an http get endpoint
 
-``` rest
+```rest
 # This is a sample requst
 GET https://postman-echo.com/get
 ```
@@ -52,7 +51,7 @@ GET https://postman-echo.com/get
 
 You can specify an http get endpoint
 
-``` rest
+```rest
 GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
 ```
 
@@ -60,7 +59,7 @@ GET https://postman-echo.com/get?foo1=bar1&foo2=bar2
 
 You can specify an http get endpoint
 
-``` rest
+```rest
 GET https://postman-echo.com/get
 Sample-Header: Hello-World
 ```
@@ -69,7 +68,7 @@ Sample-Header: Hello-World
 
 You can specify an http get endpoint
 
-``` rest
+```rest
 POST https://postman-echo.com/post
 Content-Type: application/json
 
@@ -77,7 +76,6 @@ Content-Type: application/json
   "key": "value"
 }
 ```
-
 
 ## Alternatives
 
