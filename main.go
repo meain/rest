@@ -16,9 +16,9 @@ import (
 type parseState int
 
 const (
-	Url parseState = iota
-	Headers
-	Data
+	stateUrl parseState = iota
+	stateHeaders
+	stateData
 )
 
 type requestObject struct {
@@ -39,13 +39,13 @@ func isIn(item string, items []string) bool {
 
 func parseInput(input string) (requestObject, error) {
 	lines := strings.Split(input, "\n")
-	currentParseState := Url
+	currentParseState := stateUrl
 	var parsedMethod string
 	var parsedURL string
 	parsedHeaders := make(map[string]string)
 	var parsedData string
 	for _, line := range lines {
-		if currentParseState == Url {
+		if currentParseState == stateUrl {
 			if len(line) == 0 || strings.HasPrefix(strings.Trim(line, " "), "#") {
 				continue
 			}
@@ -55,11 +55,11 @@ func parseInput(input string) (requestObject, error) {
 			} else {
 				continue
 			}
-			currentParseState = Headers
+			currentParseState = stateHeaders
 			parsedURL = tokens[1]
-		} else if currentParseState == Headers {
+		} else if currentParseState == stateHeaders {
 			if len(line) == 0 {
-				currentParseState = Data
+				currentParseState = stateData
 				continue
 			}
 			tokens := strings.Split(line, ":")
@@ -68,7 +68,7 @@ func parseInput(input string) (requestObject, error) {
 			} else {
 				fmt.Println("Unable to parse:", line)
 			}
-		} else if currentParseState == Data {
+		} else if currentParseState == stateData {
 			parsedData += line + "\n"
 		}
 	}
