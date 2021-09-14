@@ -84,6 +84,9 @@ func parseInput(input string) (requestObject, error) {
 		}
 		return rO, nil
 	} else {
+		if parsedMethod == "" {
+			return requestObject{}, errors.New("No method name found")
+		}
 		return requestObject{}, errors.New("Unable to parse the thing")
 
 	}

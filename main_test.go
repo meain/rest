@@ -127,3 +127,24 @@ func TestInputParseWithData(t *testing.T) {
 		})
 	}
 }
+
+func TestErrorHandling(t *testing.T) {
+	tests := []struct {
+		name        string
+		input       string
+		errorString string
+	}{
+		{"curl instead of get", "curl http://localhost:8080", "No method name found"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			_, e := parseInput(tc.input)
+			if e == nil {
+				t.Fatalf("parsing did not fail")
+			}
+			if e.Error() != tc.errorString {
+				t.Fatalf("got error %v; want %v", e, tc.errorString)
+			}
+		})
+	}
+}
