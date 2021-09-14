@@ -7,7 +7,7 @@
 ### macOS
 
 ```shell
-brew install meain/homebrew-meain/gloc
+brew install meain/homebrew-meain/rest
 ```
 
 ### Manual
