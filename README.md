@@ -80,3 +80,4 @@ Content-Type: application/json
 ## Alternatives
 
 - [restcli/restcli](https://github.com/restcli/restcli)
+- [Orange-OpenSource/hurl](https://github.com/Orange-OpenSource/hurl)
